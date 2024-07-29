@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 3.13)
+
+# initialize the SDK based on PICO_SDK_PATH
+# note: this must happen before project()
+include(pico_sdk_import.cmake)
+
+project(my_project)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+# initialize the Raspberry Pi Pico SDK
+pico_sdk_init()
+
+# rest of your project
+set(target_name pico_w_ble_keyboard)
+add_executable(${target_name}
+${target_name}.c
+)
+
+# print memory usage, enable all warnings
+target_link_options(${target_name} PRIVATE -Xlinker --print-memory-usage)
+target_compile_options(${target_name} PRIVATE -Wall -Wextra)
+
+target_link_libraries(${target_name} PRIVATE pico_stdlib pico_multicore pico_pio_usb)
+
+
+# enable usb output, disable uart output
+pico_enable_stdio_usb(${target_name} 1)
+pico_enable_stdio_uart(${target_name} 0)
+
+
+# create map/bin/hex/uf2 file in addition to ELF.
+pico_add_extra_outputs(${target_name})
+
+
+
+# add flash target (make flash)
+# add_custom_target(pflash DEPENDS ${PROJECT_NAME}.uf2)
+add_custom_command(TARGET ${target_name}
+    POST_BUILD
+    COMMAND picotool load  -x ${CMAKE_BINARY_DIR}/${target_name}.uf2)
+
+# 添加一个自定义命令，将生成的文件复制到指定目录
+# add_custom_command(TARGET ${target_name} POST_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E copy
+#             ${CMAKE_BINARY_DIR}/${target_name}.uf2
+#             /mnt/d/share/
+#     COMMENT "Copying generated file to /mnt/d/share/"
+# )

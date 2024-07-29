@@ -1,0 +1,41 @@
+{
+  // These settings tweaks to the cmake plugin will ensure
+  // that you debug using cortex-debug instead of trying to launch
+  // a Pico binary on the host
+  "cmake.statusbar.advanced": {
+    "debug": {
+      "visibility": "hidden"
+    },
+    "launch": {
+      "visibility": "hidden"
+    },
+    "build": {
+      "visibility": "hidden"
+    },
+    "buildTarget": {
+      "visibility": "hidden"
+    }
+  },
+  "cmake.buildBeforeRun": true,
+  "cmake.configureOnOpen": true,
+  "cmake.configureSettings": {
+    "CMAKE_MODULE_PATH": "${env:PICO_INSTALL_PATH}/pico-sdk-tools"
+  },
+  "cmake.generator": "Ninja",
+  "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+  "files.associations": {
+    "picow_bt_example_common.h": "c",
+    "usb_definitions.h": "c",
+    "inttypes.h": "c",
+    "string.h": "c",
+    "_ansi.h": "c",
+    "btstack_stdin.h": "c",
+    "btstack.h": "c",
+    "pio_usb.h": "c",
+    "stdlib.h": "c",
+    "pio_usb_configuration.h": "c",
+    "stdint.h": "c",
+    "bootrom.h": "c",
+    "pico.h": "c"
+  }
+}
