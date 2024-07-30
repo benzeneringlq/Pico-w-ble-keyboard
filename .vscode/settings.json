@@ -36,6 +36,7 @@
     "pio_usb_configuration.h": "c",
     "stdint.h": "c",
     "bootrom.h": "c",
-    "pico.h": "c"
+    "pico.h": "c",
+    "hog_keyboard_demo.h": "c"
   }
 }
